@@ -1,13 +1,14 @@
-import React from "react";
 import {
+  StatusBar,
   SafeAreaView,
   StyleSheet,
   Text,
   View,
   Image,
   Dimensions,
-  StatusBar,
+  TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import ButtonComponent from "../components/ButtonComponent";
@@ -16,14 +17,25 @@ const heroImage = require("./../assets/HeroSection/hero-img.png");
 const { height } = Dimensions.get("screen");
 
 const LandingScreen = () => {
-  const handlePress = () => {
+  const navigation = useNavigation();
+
+  const handleLogin = () => {
+    navigation.navigate("LoginScreen");
     console.log("log in");
+  };
+
+  const handleSkip = () => {
+    navigation.navigate("MapScreen");
+    console.log("skip");
   };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#2e3a56" />
       <View style={styles.container}>
+        <TouchableOpacity style={{ zIndex: 1 }} handlePress={handleSkip}>
+          <Text style={[styles.skipBtn, styles.greyText]}>Skip</Text>
+        </TouchableOpacity>
         <LinearGradient
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
@@ -35,21 +47,19 @@ const LandingScreen = () => {
             <Text style={styles.headingText}>
               Ready, set, go{"\n"}in just a few quick{"\n"}taps.
             </Text>
-            <Text style={styles.subText}>
+            <Text style={[styles.subText, styles.greyText]}>
               No matter where your destination is, we'll get you where you need
               to go
             </Text>
-            <ButtonComponent
-              {...{
-                btnContainerStyle: styles.btnContainer,
-                btnTextStyle: styles.btnText,
-                ctaText: "Log in",
-                handlePress,
-              }}
-            />
+            <TouchableOpacity
+              style={styles.btnContainer}
+              handlePress={handleLogin}
+            >
+              <Text style={styles.btnText}>Log in</Text>
+            </TouchableOpacity>
             <View style={styles.signupBox}>
-              <Text style={styles.signupContent}>Don't have an account?</Text>
-              <Text style={styles.signupTxt}>Sign Up</Text>
+              <Text style={styles.greyText}>Don't have an account?</Text>
+              <Text style={styles.blueTxt}>Sign Up</Text>
             </View>
           </View>
         </LinearGradient>
@@ -85,7 +95,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   subText: {
-    color: "#b6bcc9",
     fontSize: 18,
   },
   btnContainer: {
@@ -106,10 +115,18 @@ const styles = StyleSheet.create({
     gap: 5,
     fontSize: 14,
   },
-  signupContent: {
+  greyText: {
     color: "#b6bcc9",
   },
-  signupTxt: {
+  skipBtn: {
+    textAlign: "center",
+    textDecorationColor: "#b6bcc9",
+    textDecorationLine: "underline",
+    position: "absolute",
+    top: 15,
+    right: 15,
+  },
+  blueTxt: {
     color: "#3070f6",
   },
 });
