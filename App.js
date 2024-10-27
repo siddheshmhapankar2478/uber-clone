@@ -8,6 +8,7 @@ import { store } from "./store";
 import LandingScreen from "./screens/LandingScreen";
 import MapScreen from "./screens/MapScreen";
 import LoginScreen from "./screens/LoginScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -20,6 +21,11 @@ export default function App() {
             <Stack.Screen
               name="landingScreen"
               component={LandingScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen

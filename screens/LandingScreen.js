@@ -11,7 +11,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import ButtonComponent from "../components/ButtonComponent";
 
 const heroImage = require("./../assets/HeroSection/hero-img.png");
 const { height } = Dimensions.get("screen");
@@ -20,20 +19,20 @@ const LandingScreen = () => {
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    navigation.navigate("LoginScreen");
     console.log("log in");
+    navigation.navigate("LoginScreen");
   };
 
   const handleSkip = () => {
-    navigation.navigate("MapScreen");
     console.log("skip");
+    navigation.navigate("HomeScreen");
   };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#2e3a56" />
       <View style={styles.container}>
-        <TouchableOpacity style={{ zIndex: 1 }} handlePress={handleSkip}>
+        <TouchableOpacity style={{ zIndex: 1 }} onPress={handleSkip}>
           <Text style={[styles.skipBtn, styles.greyText]}>Skip</Text>
         </TouchableOpacity>
         <LinearGradient
@@ -51,10 +50,7 @@ const LandingScreen = () => {
               No matter where your destination is, we'll get you where you need
               to go
             </Text>
-            <TouchableOpacity
-              style={styles.btnContainer}
-              handlePress={handleLogin}
-            >
+            <TouchableOpacity style={styles.btnContainer} onPress={handleLogin}>
               <Text style={styles.btnText}>Log in</Text>
             </TouchableOpacity>
             <View style={styles.signupBox}>
