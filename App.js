@@ -1,3 +1,5 @@
+import "react-native-get-random-values";
+
 import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
