@@ -19,12 +19,10 @@ const LandingScreen = () => {
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    console.log("log in");
     navigation.navigate("LoginScreen");
   };
 
   const handleSkip = () => {
-    console.log("skip");
     navigation.navigate("HomeScreen");
   };
 

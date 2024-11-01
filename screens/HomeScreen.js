@@ -1,7 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import SearchBox from "../components/SearchBox";
-import { Keyboard } from "react-native";
 
 const HomeScreen = () => {
   const [source, setSource] = useState("");

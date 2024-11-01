@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import axios from "axios";
-
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { LOCATIONIQ_API_KEY } from "@env";
@@ -27,14 +26,10 @@ const SearchBox = (props) => {
       return;
     }
 
-    console.log({ text });
-
     try {
       const response = await axios.get(
         `https://us1.locationiq.com/v1/autocomplete.php?key=${LOCATIONIQ_API_KEY}&q=${text}&format=jsonn&limit=5`
       );
-
-      console.log({ "response.data": response.data });
 
       setResults(response.data);
     } catch (error) {
@@ -45,7 +40,6 @@ const SearchBox = (props) => {
   const handleSelect = (address) => {
     setInputText(address.display_place);
     setResults([]);
-    console.log("Selected Address:", address);
   };
 
   useEffect(() => {
