@@ -6,7 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { store } from "./store";
+import { store } from "./redux/store";
 import LandingScreen from "./screens/LandingScreen";
 import MapScreen from "./screens/MapScreen";
 import LoginScreen from "./screens/LoginScreen";
