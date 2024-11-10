@@ -7,13 +7,13 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  KeyboardAvoidingView,
   StatusBar,
 } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome6";
 
 import SearchBox from "../components/SearchBox";
+import { useNavigation } from "@react-navigation/native";
 const welcomeImage = require("./../assets/Home/welcome.png");
 const { height } = Dimensions.get("screen");
 
@@ -21,6 +21,11 @@ const HomeScreen = () => {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [isClickedOutside, setIsClickedOutside] = useState(false);
+  const navigation = useNavigation();
+
+  const handleSubmit = () => {
+    navigation.navigate("MapScreen");
+  };
 
   const handleClickOutSide = () => {
     Keyboard.dismiss();
@@ -28,39 +33,39 @@ const HomeScreen = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleClickOutSide}>
-      <>
-        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-        <View style={styles.container}>
-          <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
-            {/* <Image source={welcomeImage} style={styles.welcomeImage} /> */}
-            <Text style={styles.welcomeText}>Welcome, User!</Text>
-            <View style={styles.header}>
-              <SearchBox
-                inputText={source}
-                setInputText={setSource}
-                isClickedOutside={isClickedOutside}
-                placeholder="Enter Source Location"
-                zIndex={5}
-                icon={<Icon name="circle-dot" size={20} color="#353a40" />}
-              />
+    // <TouchableWithoutFeedback onPress={handleClickOutSide}>
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <View style={styles.container}>
+        {/* <Image source={welcomeImage} style={styles.welcomeImage} /> */}
+        <Text style={styles.welcomeText}>Welcome, User!</Text>
+        <View style={styles.header}>
+          <SearchBox
+            inputText={source}
+            setInputText={setSource}
+            isClickedOutside={isClickedOutside}
+            placeholder="Enter Source Location"
+            zIndex={5}
+            icon={<Icon name="circle-dot" size={20} color="#353a40" />}
+            type="source"
+          />
 
-              <SearchBox
-                inputText={destination}
-                setInputText={setDestination}
-                isClickedOutside={isClickedOutside}
-                placeholder="Enter Destination Location"
-                zIndex={4}
-                icon={<Icon name="location-dot" size={20} color="#353a40" />}
-              />
-            </View>
-            <TouchableOpacity style={styles.btnContainer} onPress={() => {}}>
-              <Text style={styles.btnText}>Go</Text>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
+          <SearchBox
+            inputText={destination}
+            setInputText={setDestination}
+            isClickedOutside={isClickedOutside}
+            placeholder="Enter Destination Location"
+            zIndex={4}
+            icon={<Icon name="location-dot" size={20} color="#353a40" />}
+            type="destination"
+          />
         </View>
-      </>
-    </TouchableWithoutFeedback>
+        <TouchableOpacity style={styles.btnContainer} onPress={handleSubmit}>
+          <Text style={styles.btnText}>Go</Text>
+        </TouchableOpacity>
+      </View>
+    </>
+    // </TouchableWithoutFeedback>
   );
 };
 

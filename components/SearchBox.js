@@ -7,10 +7,12 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
 import { LOCATIONIQ_API_KEY } from "@env";
+
+import { addDestinationInfo, addSourceInfo } from "../redux/actions";
 
 const SearchBox = (props) => {
   const {
@@ -20,9 +22,12 @@ const SearchBox = (props) => {
     placeholder,
     zIndex,
     icon,
+    setLocation,
+    type,
   } = props;
 
   const [results, setResults] = useState([]);
+  const dispatch = useDispatch();
 
   const handleSearch = async (text) => {
     console.log({ text });
@@ -48,13 +53,23 @@ const SearchBox = (props) => {
     console.log({ address });
     const lat = address.lat;
     const lon = address.lon;
+    const latlng = { latitude: Number(lat), longitude: Number(lon) };
     setInputText(address.display_place);
+
+    setLocation(latlng);
+
+    if (type === "source") {
+      dispatch(addSourceInfo(latlng));
+    } else {
+      dispatch(addDestinationInfo(latlng));
+    }
+
     setResults([]);
   };
 
-  useEffect(() => {
-    if (isClickedOutside) setResults([]);
-  }, [isClickedOutside]);
+  // useEffect(() => {
+  //   if (isClickedOutside) setResults([]);
+  // }, [isClickedOutside]);
 
   return (
     <View style={[styles.container, { zIndex: zIndex }]}>
@@ -67,7 +82,7 @@ const SearchBox = (props) => {
           value={inputText}
           onChangeText={handleSearch}
           onFocus={() => handleSearch(inputText)}
-          onBlur={() => setResults([])}
+          // onBlur={() => setResults([])}
         />
       </View>
 
