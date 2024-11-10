@@ -22,7 +22,6 @@ const SearchBox = (props) => {
     placeholder,
     zIndex,
     icon,
-    setLocation,
     type,
   } = props;
 
@@ -56,7 +55,6 @@ const SearchBox = (props) => {
     const latlng = { latitude: Number(lat), longitude: Number(lon) };
     setInputText(address.display_place);
 
-    setLocation(latlng);
 
     if (type === "source") {
       dispatch(addSourceInfo(latlng));
