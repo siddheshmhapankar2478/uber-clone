@@ -28,7 +28,7 @@ const LandingScreen = () => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#2e3a56" />
+      <StatusBar barStyle="light-content" backgroundColor="#1c293f" />
       <View style={styles.container}>
         <TouchableOpacity style={{ zIndex: 1 }} onPress={handleSkip}>
           <Text style={[styles.skipBtn, styles.greyText]}>Skip</Text>

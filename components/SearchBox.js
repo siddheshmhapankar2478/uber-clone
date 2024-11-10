@@ -13,12 +13,19 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { LOCATIONIQ_API_KEY } from "@env";
 
 const SearchBox = (props) => {
-  const { inputText, setInputText, isClickedOutside, placeholder, zIndex } =
-    props;
+  const {
+    inputText,
+    setInputText,
+    isClickedOutside,
+    placeholder,
+    zIndex,
+    icon,
+  } = props;
 
   const [results, setResults] = useState([]);
 
   const handleSearch = async (text) => {
+    console.log({ text });
     setInputText(text);
 
     if (text.length < 3) {
@@ -38,6 +45,9 @@ const SearchBox = (props) => {
   };
 
   const handleSelect = (address) => {
+    console.log({ address });
+    const lat = address.lat;
+    const lon = address.lon;
     setInputText(address.display_place);
     setResults([]);
   };
@@ -48,14 +58,19 @@ const SearchBox = (props) => {
 
   return (
     <View style={[styles.container, { zIndex: zIndex }]}>
-      <TextInput
-        style={styles.input}
-        placeholder={placeholder}
-        value={inputText}
-        onChangeText={handleSearch}
-        onFocus={() => handleSearch(inputText)}
-        onBlur={() => setResults([])}
-      />
+      <View style={styles.inputContainer}>
+        <View style={styles.iconBox}>{icon}</View>
+        <View style={styles.borderLine} />
+        <TextInput
+          style={styles.input}
+          placeholder={placeholder}
+          value={inputText}
+          onChangeText={handleSearch}
+          onFocus={() => handleSearch(inputText)}
+          onBlur={() => setResults([])}
+        />
+      </View>
+
       {results.length ? (
         <View>
           <View style={styles.listContainer}>
@@ -70,18 +85,21 @@ const SearchBox = (props) => {
                   ]}
                   onPress={() => handleSelect(item)}
                 >
-                  <View style={styles.placeDescription}>
-                    <View style={styles.iconContainer}>
-                      <Icon name="location-pin" size={30} color="#686868" />
-                    </View>
-                    <View>
-                      <Text style={styles.placeName} numberOfLines={1}>
-                        {item.display_place}
-                      </Text>
-                      <Text style={styles.address} numberOfLines={1}>
-                        {item.display_address}
-                      </Text>
-                    </View>
+                  <View style={styles.iconContainer}>
+                    <Icon
+                      style={styles.icon}
+                      name="location-pin"
+                      size={30}
+                      color="#686868"
+                    />
+                  </View>
+                  <View style={styles.placesInfo}>
+                    <Text style={styles.placeName} numberOfLines={1}>
+                      {item.display_place}
+                    </Text>
+                    <Text style={styles.address} numberOfLines={1}>
+                      {item.display_address}
+                    </Text>
                   </View>
                 </TouchableOpacity>
               )}
@@ -99,11 +117,30 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
   },
-  input: {
-    height: 40,
-    borderColor: "#ddd",
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "#d9dcdf",
     borderWidth: 1,
     paddingHorizontal: 8,
+    gap: 8,
+    borderRadius: 8,
+  },
+  iconBox: {
+    width: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  borderLine: {
+    height: "60%",
+    width: 1,
+    backgroundColor: "#d9dcdf",
+  },
+  input: {
+    height: 40,
+    color: "#383a3b",
+    flex: 1,
   },
   listContainer: {
     backgroundColor: "#f4f4f4",
@@ -120,6 +157,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 8,
+    borderRadius: 8,
     zIndex: 5,
   },
   resultItem: {
@@ -129,6 +167,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
     color: "black",
     flex: 1,
+    flexDirection: "row",
+    gap: 5,
   },
   lastItem: { borderBottomWidth: 0 },
   placeDescription: {
@@ -138,15 +178,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconContainer: {
-    padding: 4,
     borderRadius: 20,
     width: 40,
     height: 40,
     backgroundColor: "#e6e6e6",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placesInfo: {
+    flex: 1,
   },
   placeName: {
     fontWeight: "600",
-    color: "#0e0e0e",
+    color: "#3a3c3f",
   },
   address: {
     color: "#757575",
