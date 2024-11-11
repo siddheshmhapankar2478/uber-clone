@@ -14,6 +14,7 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 
 import SearchBox from "../components/SearchBox";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 const welcomeImage = require("./../assets/Home/welcome.png");
 const { height } = Dimensions.get("screen");
 
@@ -21,7 +22,9 @@ const HomeScreen = () => {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [isClickedOutside, setIsClickedOutside] = useState(false);
+
   const navigation = useNavigation();
+  const navInfo = useSelector((state) => state.nav);
 
   const handleSubmit = () => {
     navigation.navigate("MapScreen");
@@ -60,8 +63,24 @@ const HomeScreen = () => {
             type="destination"
           />
         </View>
-        <TouchableOpacity style={styles.btnContainer} onPress={handleSubmit}>
-          <Text style={styles.btnText}>Go</Text>
+        <TouchableOpacity
+          style={[
+            styles.btnContainer,
+            !navInfo?.source || !navInfo?.destination ? styles.disbaledBtn : {},
+          ]}
+          onPress={handleSubmit}
+          disabled={!navInfo?.source || !navInfo?.destination}
+        >
+          <Text
+            style={[
+              styles.btnText,
+              !navInfo?.source || !navInfo?.destination
+                ? styles.disbaledBtnText
+                : {},
+            ]}
+          >
+            Go
+          </Text>
         </TouchableOpacity>
       </View>
     </>
@@ -140,5 +159,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "500",
     fontSize: 18,
+  },
+  disbaledBtn: {
+    backgroundColor: "#DEE1E6",
+  },
+  disbaledBtnText: {
+    color: "#fafcff",
   },
 });
